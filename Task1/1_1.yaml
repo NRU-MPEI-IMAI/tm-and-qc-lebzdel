@@ -1,0 +1,37 @@
+name: binary increment
+source code: |
+  # Adds 1 to a binary number.
+  input: '1+1'
+  blank: ' '
+  start state: start
+  table:
+    start:
+      1: {R}
+      '+': {write: 1, R: deletePlus}
+      ' ': {L: done}
+    deletePlus:
+        1: {R}
+        ' ': {L: deleteOne}
+    deleteOne:
+        1: {write: ' ', L: done}
+    done:
+
+
+  # Exercises:
+
+  # • Modify the machine to always halt on the leftmost digit
+  #   (regardless of the number's length).
+  #   Hint: add a state between carry and done.
+
+  # • Make a machine that adds 2 instead of 1.
+  #   Hint: 2 is '10' in binary, so the last digit is unaffected.
+  #   Alternative hint: chain together two copies of the machine from
+  #   the first exercise (renaming the states of the second copy).
+
+  # • Make a machine to subtract 1.
+  #   To simplify things, assume the input is always greater than 0.
+positions:
+  start: {x: 367.95, y: 364.31}
+  deletePlus: {x: 286.07, y: 241.47}
+  deleteOne: {x: 512.58, y: 246.34}
+  done: {x: 580.23, y: 363.96}

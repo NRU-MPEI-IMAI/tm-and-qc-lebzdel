@@ -1,0 +1,75 @@
+name: binary increment
+source code: |
+  # Adds 1 to a binary number.
+  input: '1101 100 0011 1011'
+  blank: ' '
+  start state: q0
+  table:
+      q0:
+        [1,0]: R
+        ' ': {write: '_', R: q1}
+      
+      q1:
+        ' ': {L: q2}
+        [0,1]: {R: q0}
+        
+      q2:
+       '_': {write: ' ', L: q3}
+       
+      q3:
+        [1,0,'_']: L
+        ' ': {R: q4}
+
+      q4: 
+        [a,b,'_',' ']: R
+        0: {write: a, R: q5}
+        1: {write: b, R: q5}
+        
+      q5:
+        [0,1]: R
+        '_': {R: q4}
+        ' ': {L: q7}
+      
+      q6:
+        [0,1,a,b,'_']: L
+        '_': {L: q7}
+        ' ': {R: q4}
+
+      q7:
+        a: {write: 0, L: q8}
+        b: {write: 1, L: q8}
+        [0,1]: {L: q6}
+
+      
+      q8:
+        a: {write: 0, L}
+        b: {write: 1, L}
+        ['_',' ']: {R: done}
+      
+      done:
+
+
+  # Exercises:
+
+  # • Modify the machine to always halt on the leftmost digit
+  #   (regardless of the number's length).
+  #   Hint: add a state between carry and done.
+
+  # • Make a machine that adds 2 instead of 1.
+  #   Hint: 2 is '10' in binary, so the last digit is unaffected.
+  #   Alternative hint: chain together two copies of the machine from
+  #   the first exercise (renaming the states of the second copy).
+
+  # • Make a machine to subtract 1.
+  #   To simplify things, assume the input is always greater than 0.
+positions:
+  q0: {x: 360.52, y: 133.01}
+  q1: {x: 92.55, y: 133.23}
+  q2: {x: 102.2, y: 260.11}
+  q3: {x: 200.82, y: 274.18}
+  q4: {x: 226.79, y: 373.97}
+  q5: {x: 338.69, y: 454.97}
+  q6: {x: 480.78, y: 298.74}
+  q7: {x: 480.53, y: 443.36}
+  q8: {x: 611.91, y: 438.07}
+  done: {x: 748.59, y: 434.1}

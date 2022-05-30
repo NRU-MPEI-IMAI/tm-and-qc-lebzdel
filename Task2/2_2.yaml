@@ -1,0 +1,56 @@
+name: binary increment
+source code: |
+  # Adds 1 to a binary number.
+  input: '[()()]'
+  blank: ' '
+  start state: q0
+  table:
+      q0: 
+        ['(','{','[',a,b,c]: R
+        ')': {write: a, L: A}
+        ']': {write: b, L: B}
+        '}': {write: c, L: C}
+        ' ': {write: T, L: q2}
+      A:
+        [' ','[','{']: {R: q1} 
+        [,a,b,c,']','}']: L
+        '(': {write: a, R: q0}
+      B:
+        [' ','(','{']: {R: q1} 
+        [a,b,c,')','}']: L
+        '[': {write: b, R: q0}
+      C:
+        [' ','(','[']: {R: q1} 
+        [a,b,c,')',']']: L
+        '{': {write: c, R: q0}
+      q1: 
+        ['(','{','[',a,b,c,']','}',')']: R
+        ' ': {write: F, L: q2} 
+      q2:
+        ['(','{','[',a,b,c,']','}',')']: L
+        ' ': {R: done}
+      done: 
+        ['(','{','[',a,b,c,']','}',')']: {write: ' ', R}
+
+
+  # Exercises:
+
+  # • Modify the machine to always halt on the leftmost digit
+  #   (regardless of the number's length).
+  #   Hint: add a state between carry and done.
+
+  # • Make a machine that adds 2 instead of 1.
+  #   Hint: 2 is '10' in binary, so the last digit is unaffected.
+  #   Alternative hint: chain together two copies of the machine from
+  #   the first exercise (renaming the states of the second copy).
+
+  # • Make a machine to subtract 1.
+  #   To simplify things, assume the input is always greater than 0.
+positions:
+  q0: {x: 549.73, y: 328.8}
+  A: {x: 742.12, y: 71.49}
+  B: {x: 206.14, y: 201.66}
+  C: {x: 454.1, y: 147.93}
+  q1: {x: 115.2, y: 83.56}
+  q2: {x: 260.73, y: 480}
+  done: {x: 538.92, y: 477.93}
